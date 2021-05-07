@@ -1,0 +1,5 @@
+# Contigs/chromosomes are classified as "core" when at least 75.0percent of the contig is present in at least 2.0 genomes.Test1_contig1	accessory
+Test1_contig2	accessory
+Test1_contig3	core
+Test1_contig4	core
+Test1_contig5	accessory

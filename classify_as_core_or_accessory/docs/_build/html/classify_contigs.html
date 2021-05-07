@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>classify_contigs module &#8212; Classify Core/Accessory  documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Classify Core/Accessory  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-classify_contigs">
+<span id="classify-contigs-module"></span><h1>classify_contigs module<a class="headerlink" href="#module-classify_contigs" title="Permalink to this headline">¶</a></h1>
+<p>Given a set of genome alignments, classify contigs/chromosomes are “core” or “accessory”.</p>
+<p>Background:
+In many genomes we can distinguish conserved regions, that are present in all genomes in
+a dataset and often referred to as “Core”, and regions that are not conserved in all
+genomes -and thus probablynot absolutely required for survival- and often referred to
+as “Accessory” or “(Conditionally) dispensable” regions.</p>
+<p>Here, given a dataset of aligned genomes, we classify a contig/scaffold/chromosome in
+an assembly as “Core” or “Accessory” based on how often it is aligned to regions in the
+other genomes. Note that whether a contig/scaffold/chromosome is designated as core depends
+on the other genomes in the dataset. Typically as a dataset increases in size, more cases
+are found in which (part of) a contig/scaffold/chromosome) is absent and thus as a dataset
+increases the number of core contigs/scaffolds/chromosomes decrease. Whether a
+contig/scaffold/chromosome is designated “Core” or “Accessory” also depends on the two main
+thresholds that can been chosen, namely how much of a contig has to be aligned
+(min_overlap_contig) in what fraction of the genomes in the dataset (min_overlap_dataset)
+for it to be classified as core. Finally you may chose to exclude alignments based on low
+levels of sequence similarity or short length.</p>
+<p>Dependencies:
+Bedtools (tested with bedtools v2.27.1).</p>
+<p>Alignments are assumed to have been generated with nucmer and show_coords (both part of
+MUMmer (tested with version 3.23))</p>
+<dl class="function">
+<dt id="classify_contigs.bedfiles_to_genome_coverage">
+<code class="descclassname">classify_contigs.</code><code class="descname">bedfiles_to_genome_coverage</code><span class="sig-paren">(</span><em>bedfiles</em>, <em>genome_file</em>, <em>out_dir</em>, <em>logfile</em><span class="sig-paren">)</span><a class="headerlink" href="#classify_contigs.bedfiles_to_genome_coverage" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates for each genomic region how many bedfiles overlap</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>bedfiles</strong> (<em>list</em>) – list of bedfiles</p></li>
+<li><p><strong>genome_file</strong> (<em>str</em>) – tab-separated file with the length for each contig/scaffold/chromosome</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em>) – name of the output folder</p></li>
+<li><p><strong>logfile</strong> (<em>File</em>) – logfile to which successfully executed commands are written</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:
+Name of the file with the coverage per region. See bedtools genomecov documentation for more detail</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="classify_contigs.classify_as_core_or_accessory">
+<code class="descclassname">classify_contigs.</code><code class="descname">classify_as_core_or_accessory</code><span class="sig-paren">(</span><em>genome_coverage_bed</em>, <em>size_dataset</em>, <em>genome_file</em>, <em>min_overlap_contig</em>, <em>min_coverage</em><span class="sig-paren">)</span><a class="headerlink" href="#classify_contigs.classify_as_core_or_accessory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Lists core and accessory contigs for a given genome</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>genome_coverage_bed</strong> (<em>str</em>) – </p></li>
+<li><p><strong>size_dataset</strong> (<em>int</em>) – </p></li>
+<li><p><strong>genome_file</strong> (<em>str</em>) – </p></li>
+<li><p><strong>min_overlap_contig</strong> (<em>float</em>) – </p></li>
+<li><p><strong>min_coverage</strong> (<em>int</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:
+Writes a tab-separated textfile:
+contig/scaffold/chromosome     core/accessory/unique
+Print the list of core contigs/scaffolds/chromosomes</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="classify_contigs.coords_to_beds">
+<code class="descclassname">classify_contigs.</code><code class="descname">coords_to_beds</code><span class="sig-paren">(</span><em>coords_files</em>, <em>min_identity</em>, <em>min_length</em>, <em>out_dir</em>, <em>logfile</em><span class="sig-paren">)</span><a class="headerlink" href="#classify_contigs.coords_to_beds" title="Permalink to this definition">¶</a></dt>
+<dd><p>For each coords file in the list, creates a bedfile with non-redundant aligned regions of a query from MUMmer output</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coords_files</strong> (<em>list</em>) – list of tab-separated files generated from delta files (nucmer output) by show-coords.</p></li>
+<li><p><strong>min_length</strong> (<em>int</em>) – minimum length of the aligned region for it to be included</p></li>
+<li><p><strong>min_identify</strong> (<em>float</em>) – minimum percent identity of the aligned region for it to be included.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em>) – name of the output folder. Bedfiles created will be saved here as &lt;coords_file&gt;.bed and &lt;coords_file&gt;.nr.bed</p></li>
+<li><p><strong>logfile</strong> (<em>File</em>) – logfile to which successfully executed commands are written</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:
+list with the names of the bedfiles</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="classify_contigs.init">
+<code class="descclassname">classify_contigs.</code><code class="descname">init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#classify_contigs.init" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse commandline arguments, check input, setup directory structure</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/classify_contigs.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Classify Core/Accessory  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Like Fokkens.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

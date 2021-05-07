@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>nucmercoords_to_bed module &#8212; Classify Core/Accessory  documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Classify Core/Accessory  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-nucmercoords_to_bed">
+<span id="nucmercoords-to-bed-module"></span><h1>nucmercoords_to_bed module<a class="headerlink" href="#module-nucmercoords_to_bed" title="Permalink to this headline">¶</a></h1>
+<p>Creates a bedfile with non-redundant aligned regions of a query from MUMmer output</p>
+<dl class="field-list simple">
+<dt class="field-odd">param coords_file</dt>
+<dd class="field-odd"><p>Tabulated file generated from a delta file (nucmer output) by show-coords.</p>
+</dd>
+<dt class="field-even">type coords_file</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+<dt class="field-odd">param min_length</dt>
+<dd class="field-odd"><p>minimum length of the aligned region for it to be included</p>
+</dd>
+<dt class="field-even">type min_length</dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">param min_identify</dt>
+<dd class="field-odd"><p>minimum percent identity of the aligned region for it to be included.</p>
+</dd>
+<dt class="field-even">type min_identify</dt>
+<dd class="field-even"><p>float</p>
+</dd>
+<dt class="field-odd">param out_dir</dt>
+<dd class="field-odd"><p>name of the output folder. Bedfiles created will be saved here as &lt;coords_file&gt;.bed and &lt;coords_file&gt;.nr.bed</p>
+</dd>
+<dt class="field-even">type out_dir</dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+<p>Notes:
+Tested with bedtools v2.27.1 and MUMmer 3.23</p>
+<dl class="function">
+<dt id="nucmercoords_to_bed.coords_to_bed">
+<code class="descclassname">nucmercoords_to_bed.</code><code class="descname">coords_to_bed</code><span class="sig-paren">(</span><em>coords_file</em>, <em>min_identity</em>, <em>min_length</em>, <em>out_dir</em>, <em>logfile=None</em><span class="sig-paren">)</span><a class="headerlink" href="#nucmercoords_to_bed.coords_to_bed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates a bedfile with non-redundant aligned regions of a query from MUMmer output</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>coords_file</strong> (<em>str</em>) – tabulated file generated from a delta file (nucmer output) by show-coords.</p></li>
+<li><p><strong>min_length</strong> (<em>int</em>) – minimum length of the aligned region for it to be included</p></li>
+<li><p><strong>min_identify</strong> (<em>float</em>) – minimum percent identity of the aligned region for it to be included.</p></li>
+<li><p><strong>out_dir</strong> (<em>str</em>) – name of the output folder. Bedfiles created will be saved here as &lt;coords_file&gt;.bed and &lt;coords_file&gt;.nr.bed</p></li>
+</ul>
+</dd>
+</dl>
+<p>Returns:
+the name of the bedfile (str)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="nucmercoords_to_bed.init_args">
+<code class="descclassname">nucmercoords_to_bed.</code><code class="descname">init_args</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#nucmercoords_to_bed.init_args" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/nucmercoords_to_bed.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Classify Core/Accessory  documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Like Fokkens.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
+  </body>
+</html>

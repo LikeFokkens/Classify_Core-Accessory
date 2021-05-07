@@ -1,0 +1,28 @@
+Called with:
+../classify_contigs.py -genome_file Test1.genome_file.tab -ref_name Test1 -in_dir coords_files/ -out_dir OUTPUT -min_identity 80 -min_length 100 
+
+
+
+##################################
+#
+#   SETTINGS
+#	genome_file	Test1.genome_file.tab
+#	ref_name	Test1
+#	in_dir	coords_files/
+#	min_length	100
+#	min_identity	80
+#	min_overlap_contig	0.75
+#	min_overlap_dataset	0.90
+#	out_dir	OUTPUT/min_length-100_min_identity-80_min_overlap_contig-0.75_min_overlap_dataset-0.90
+#
+##################################
+
+awk -v OFS='\t' '{if ($10 >= 80 && $7 >= 100) print $12,$1-1,$2}' coords_files/Test1.vs.Test2.coords | sort -k1,1 -k2,2n > OUTPUT/min_length-100_min_identity-80_min_overlap_contig-0.75_min_overlap_dataset-0.90/bedfiles/Test1.vs.Test2.bed
+bedtools merge -i OUTPUT/min_length-100_min_identity-80_min_overlap_contig-0.75_min_overlap_dataset-0.90/bedfiles/Test1.vs.Test2.bed > OUTPUT/min_length-100_min_identity-80_min_overlap_contig-0.75_min_overlap_dataset-0.90/bedfiles/Test1.vs.Test2.nr.bed
+awk -v OFS='\t' '{if ($10 >= 80 && $7 >= 100) print $12,$1-1,$2}' coords_files/Test1.vs.Test3.coords | sort -k1,1 -k2,2n > OUTPUT/min_length-100_min_identity-80_min_overlap_contig-0.75_min_overlap_dataset-0.90/bedfiles/Test1.vs.Test3.bed
+bedtools merge -i OUTPUT/min_length-100_min_identity-80_min_overlap_contig-0.75_min_overlap_dataset-0.90/bedfiles/Test1.vs.Test3.bed > OUTPUT/min_length-100_min_identity-80_min_overlap_contig-0.75_min_overlap_dataset-0.90/bedfiles/Test1.vs.Test3.nr.bed
+cat OUTPUT/min_length-100_min_identity-80_min_overlap_contig-0.75_min_overlap_dataset-0.90/bedfiles/Test1.vs.Test2.nr.bed OUTPUT/min_length-100_min_identity-80_min_overlap_contig-0.75_min_overlap_dataset-0.90/bedfiles/Test1.vs.Test3.nr.bed | sort -k1,1 -k2,2n > OUTPUT/min_length-100_min_identity-80_min_overlap_contig-0.75_min_overlap_dataset-0.90/bedfiles//all_alignments.bed
+
+Calculated coverage with:
+bedtools genomecov -bga -split -i OUTPUT/min_length-100_min_identity-80_min_overlap_contig-0.75_min_overlap_dataset-0.90/bedfiles//all_alignments.bed -g Test1.genome_file.tab > OUTPUT/min_length-100_min_identity-80_min_overlap_contig-0.75_min_overlap_dataset-0.90/output/Test1.genome_file.tab.coverage.bed
+Cumulative size core regions: 18319 out of 72000 : 0.25443055555555555, accessory: 53681
